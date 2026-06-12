@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-1학기 연암리빙랩 AdventureDesign 운영 만족도 조사</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a1628;--navy2:#111e35;
+  --mint:#00c896;--mint2:#00a87a;
+  --mint-light:rgba(0,200,150,.1);--mint-glow:rgba(0,200,150,.12);
+  --fg:#e8f0fe;--fg2:#94a3b8;--fg3:#64748b;
+  --border:rgba(255,255,255,.08);--border2:rgba(0,200,150,.3);
+  --card:#131f36;--card2:#0f1a2e;
+  --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+}
+body{font-family:var(--font);background:var(--navy);color:var(--fg);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+header{background:var(--navy2);border-bottom:1px solid var(--border);padding:44px 28px 40px;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:420px;height:220px;background:radial-gradient(ellipse,rgba(0,200,150,.1) 0%,transparent 70%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);border:1px solid var(--border2);border-radius:4px;padding:5px 14px;margin-bottom:22px}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.title-sub{font-size:clamp(13px,3vw,15px);font-weight:500;color:var(--mint);letter-spacing:.04em;margin-bottom:6px;opacity:.9}
+.title-main{font-size:clamp(20px,4.5vw,28px);font-weight:700;line-height:1.3;letter-spacing:-.02em;background:linear-gradient(135deg,#e8f0fe 0%,var(--mint) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+.header-desc{display:inline-block;font-size:13px;color:var(--fg2);line-height:1.8;font-weight:400;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:12px 20px;max-width:480px;text-align:left}
+.header-desc strong{color:var(--mint);font-weight:600}
+
+.progress-wrap{background:var(--navy2);border-bottom:1px solid var(--border);padding:14px 24px;position:sticky;top:0;z-index:100}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.progress-meta span{font-size:12px;color:var(--fg3);font-weight:400}
+.progress-meta strong{font-size:13px;color:var(--mint);font-weight:600}
+.progress-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--mint);border-radius:2px;transition:width .4s ease;width:0%}
+
+main{max-width:700px;margin:0 auto;padding:32px 20px 80px}
+
+.section-label{display:flex;align-items:center;gap:10px;margin:36px 0 16px}
+.section-label .tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);background:var(--mint-light);border:1px solid var(--border2);border-radius:4px;padding:4px 10px}
+.section-label .line{flex:1;height:1px;background:var(--border)}
+
+.card{background:var(--card);border:1px solid var(--border);border-left:3px solid transparent;border-radius:12px;padding:24px 24px 22px;margin-bottom:14px;transition:border-color .2s,background .2s}
+.card:focus-within{border-color:var(--border2);border-left-color:var(--mint);background:var(--card2)}
+.card.has-error{border-left-color:#f97316;border-color:rgba(249,115,22,.3)}
+
+.q-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px}
+.q-num{font-size:11px;font-weight:700;color:var(--mint);background:var(--mint-light);border:1px solid var(--border2);border-radius:4px;padding:3px 9px;white-space:nowrap;margin-top:2px;flex-shrink:0;letter-spacing:.06em}
+.q-text{font-size:14px;font-weight:500;line-height:1.7;color:var(--fg);letter-spacing:-.01em}
+.q-required{color:#f97316;margin-left:3px}
+
+.scale-wrap{display:flex;gap:6px}
+.scale-wrap label{flex:1;cursor:pointer}
+.scale-wrap input[type="radio"]{display:none}
+.scale-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 10px;border:1px solid var(--border);border-radius:8px;transition:all .18s;text-align:center}
+.s-num{font-size:18px;font-weight:700;color:var(--fg2);transition:color .18s}
+.s-lbl{font-size:10px;color:var(--fg3);line-height:1.35;font-weight:400;word-break:keep-all;min-height:28px;display:flex;align-items:center;justify-content:center}
+.scale-wrap input:checked + .scale-btn{background:var(--mint-glow);border-color:var(--mint)}
+.scale-wrap input:checked + .scale-btn .s-num{color:var(--mint)}
+.scale-wrap input:checked + .scale-btn .s-lbl{color:var(--mint)}
+
+textarea{width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;color:var(--fg);resize:vertical;min-height:100px;transition:border-color .2s;line-height:1.7}
+textarea:focus{outline:none;border-color:var(--mint);background:rgba(0,200,150,.04)}
+textarea::placeholder{color:var(--fg3)}
+
+.err-msg{font-size:12px;color:#f97316;margin-top:8px;display:none}
+
+.submit-area{text-align:center;margin-top:40px}
+.submit-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 52px;background:var(--mint);color:var(--navy);font-family:var(--font);font-size:15px;font-weight:700;border:none;border-radius:8px;cursor:pointer;letter-spacing:.02em;transition:all .2s}
+.submit-btn:hover{background:var(--mint2);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+#done-screen{display:none;text-align:center;padding:60px 24px}
+.done-ring{width:72px;height:72px;border:2px solid var(--mint);border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center}
+.done-ring svg{width:32px;height:32px}
+#done-screen h2{font-size:22px;font-weight:700;letter-spacing:-.02em;background:linear-gradient(135deg,var(--fg) 0%,var(--mint) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+#done-screen p{font-size:14px;color:var(--fg2);line-height:1.85}
+
+@media(max-width:500px){
+  .scale-wrap{gap:4px}.scale-btn{padding:10px 2px 8px}.s-num{font-size:15px}.s-lbl{font-size:9px;min-height:24px}.card{padding:18px 14px 16px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">그린바이오 혁신융합대학사업 · 연암대학교</div>
+  <p class="title-sub">2026-1학기 연암리빙랩</p>
+  <h1 class="title-main">AdventureDesign 운영 만족도 조사</h1>
+  <div class="header-desc">
+    여러분의 한 마디가 더 나은 수업을 만듭니다.<br>
+    <strong>솔직하고 자유로운 응답</strong>을 부탁드립니다.<br>
+    모든 응답은 익명으로 처리되며 수업 개선에만 활용됩니다.
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="prog-label">0 / 9 문항 완료</span>
+    <strong id="prog-pct">0%</strong>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<main>
+<form id="sf" novalidate>
+
+  <div class="section-label"><span class="tag">프로그램 만족도</span><span class="line"></span></div>
+
+  <div class="card" id="card-q1">
+    <div class="q-head"><span class="q-num">Q 01</span><span class="q-text">본 프로그램에 대해 전반적으로 만족하셨습니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q1" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
+      <label><input type="radio" name="q1" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
+      <label><input type="radio" name="q1" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q1" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
+      <label><input type="radio" name="q1" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q1">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="card" id="card-q2">
+    <div class="q-head"><span class="q-num">Q 02</span><span class="q-text">본 프로그램의 교육 내용이 학업(전공 및 교양)에 도움이 된다고 생각하십니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q2" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
+      <label><input type="radio" name="q2" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
+      <label><input type="radio" name="q2" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
+      <label><input type="radio" name="q2" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
+      <label><input type="radio" name="q2" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q2">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="card" id="card-q3">
+    <div class="q-head"><span class="q-num">Q 03</span><span class="q-text">본 프로그램을 통해 알게 된 교육내용과 정보가 본인의 역량향상에 도움이 되었다고 생각하십니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q3" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
+      <label><input type="radio" name="q3" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
+      <label><input type="radio" name="q3" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
+      <label><input type="radio" name="q3" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
+      <label><input type="radio" name="q3" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q3">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="card" id="card-q4">
+    <div class="q-head"><span class="q-num">Q 04</span><span class="q-text">본 프로그램 참여 후, 참여 전에 가졌던 기대감에 비해 만족감은 향상되었습니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q4" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
+      <label><input type="radio" name="q4" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
+      <label><input type="radio" name="q4" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
+      <label><input type="radio" name="q4" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
+      <label><input type="radio" name="q4" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q4">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="section-label"><span class="tag">강사 및 시설</span><span class="line"></span></div>
+
+  <div class="card" id="card-q5">
+    <div class="q-head"><span class="q-num">Q 05</span><span class="q-text">본 프로그램의 교육 강사에 대해 만족하셨습니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q5" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
+      <label><input type="radio" name="q5" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
+      <label><input type="radio" name="q5" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q5" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
+      <label><input type="radio" name="q5" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q5">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="card" id="card-q8">
+    <div class="q-head"><span class="q-num">Q 06</span><span class="q-text">본 프로그램 교육 장소 및 기타시설에 대해 만족하셨습니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q8" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
+      <label><input type="radio" name="q8" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
+      <label><input type="radio" name="q8" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q8" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
+      <label><input type="radio" name="q8" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q8">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="section-label"><span class="tag">재참여 및 추천 의향</span><span class="line"></span></div>
+
+  <div class="card" id="card-q6">
+    <div class="q-head"><span class="q-num">Q 07</span><span class="q-text">본 프로그램을 후배나 친구들에게 권유하실 의사가 있으십니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q6" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>없다</span></div></label>
+      <label><input type="radio" name="q6" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">없다</span></div></label>
+      <label><input type="radio" name="q6" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q6" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">있다</span></div></label>
+      <label><input type="radio" name="q6" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>있다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q6">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="card" id="card-q7">
+    <div class="q-head"><span class="q-num">Q 08</span><span class="q-text">본 프로그램에 재참여할 의사가 있으십니까?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q7" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>없다</span></div></label>
+      <label><input type="radio" name="q7" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">없다</span></div></label>
+      <label><input type="radio" name="q7" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q7" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">있다</span></div></label>
+      <label><input type="radio" name="q7" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>있다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q7">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="section-label"><span class="tag">자유 의견</span><span class="line"></span></div>
+
+  <div class="card" id="card-q9">
+    <div class="q-head"><span class="q-num">Q 09</span><span class="q-text">본 프로그램의 참여 후기 또는 개선점을 자유롭게 작성해 주세요.</span></div>
+    <textarea name="q9" id="q9" placeholder="참여 소감, 좋았던 점, 개선이 필요한 부분 등을 자유롭게 작성해 주세요."></textarea>
+  </div>
+
+  <div class="submit-area">
+    <button type="submit" class="submit-btn" id="sub-btn">설문 제출하기 →</button>
+  </div>
+</form>
+
+<div id="done-screen">
+  <div class="done-ring">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="15" stroke="#00c896" stroke-width="1.5"/>
+      <path d="M9 16.5l4.5 4.5 9-10" stroke="#00c896" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h2>응답이 제출되었습니다!</h2>
+  <p>소중한 의견 감사합니다.<br>더 나은 프로그램을 위해 적극 반영하겠습니다.<br><br>연암대학교 그린바이오 혁신융합대학사업단</p>
+</div>
+</main>
+
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyamNZ0gIouYkqBSg3aBvShDJ_ApvzHfD0PFPAnZfgRIIzt_nmeAozSA3Ks5vYSmW7a/exec";
+const REQ=["q1","q2","q3","q4","q5","q6","q7","q8"];
+const TOTAL=9;
+function countDone(){let n=REQ.filter(name=>document.querySelector(`input[name="${name}"]:checked`)).length;if(document.getElementById("q9")?.value.trim())n++;return n}
+function updateProg(){const n=countDone(),pct=Math.round(n/TOTAL*100);document.getElementById("prog-fill").style.width=pct+"%";document.getElementById("prog-label").textContent=n+" / "+TOTAL+" 문항 완료";document.getElementById("prog-pct").textContent=pct+"%"}
+document.getElementById("sf").addEventListener("change",updateProg);
+document.getElementById("sf").addEventListener("input",updateProg);
+function validate(){let ok=true,first=null;REQ.forEach(name=>{const card=document.getElementById("card-"+name),err=document.getElementById("err-"+name);if(!document.querySelector(`input[name="${name}"]:checked`)){card.classList.add("has-error");err.style.display="block";if(!first)first=card;ok=false}else{card.classList.remove("has-error");err.style.display="none"}});if(first)first.scrollIntoView({behavior:"smooth",block:"center"});return ok}
+document.getElementById("sf").addEventListener("submit",e=>{
+  e.preventDefault();if(!validate())return;
+  const btn=document.getElementById("sub-btn");btn.disabled=true;btn.textContent="제출 중…";
+  const payload={
+    timestamp:new Date().toLocaleString("ko-KR"),
+    q1:document.querySelector('input[name="q1"]:checked')?.value||"",
+    q2:document.querySelector('input[name="q2"]:checked')?.value||"",
+    q3:document.querySelector('input[name="q3"]:checked')?.value||"",
+    q4:document.querySelector('input[name="q4"]:checked')?.value||"",
+    q5:document.querySelector('input[name="q5"]:checked')?.value||"",
+    q6:document.querySelector('input[name="q6"]:checked')?.value||"",
+    q7:document.querySelector('input[name="q7"]:checked')?.value||"",
+    q8:document.querySelector('input[name="q8"]:checked')?.value||"",
+    q9:document.getElementById("q9").value
+  };
+  let iframe=document.getElementById("hif");
+  if(!iframe){iframe=document.createElement("iframe");iframe.id="hif";iframe.name="hif";iframe.style.display="none";document.body.appendChild(iframe)}
+  iframe.onload=()=>{document.getElementById("sf").style.display="none";document.getElementById("done-screen").style.display="block";window.scrollTo({top:0,behavior:"smooth"})};
+  const f=document.createElement("form");f.method="POST";f.action=SCRIPT_URL;f.target="hif";
+  Object.entries(payload).forEach(([k,v])=>{const i=document.createElement("input");i.type="hidden";i.name=k;i.value=v;f.appendChild(i)});
+  document.body.appendChild(f);f.submit();document.body.removeChild(f);
+});
+</script>
+</body>
+</html>
