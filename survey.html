@@ -50,6 +50,14 @@ main{max-width:700px;margin:0 auto;padding:32px 20px 80px}
 .q-text{font-size:14px;font-weight:500;line-height:1.7;color:var(--fg);letter-spacing:-.01em}
 .q-required{color:#f97316;margin-left:3px}
 
+/* 소속계열 선택 */
+.dept-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dept-wrap label{cursor:pointer}
+.dept-wrap input[type="radio"]{display:none}
+.dept-btn{display:flex;align-items:center;justify-content:center;padding:11px 8px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;color:var(--fg2);transition:all .18s;text-align:center}
+.dept-wrap input:checked + .dept-btn{background:var(--mint-glow);border-color:var(--mint);color:var(--mint)}
+
+/* 5점 척도 */
 .scale-wrap{display:flex;gap:6px}
 .scale-wrap label{flex:1;cursor:pointer}
 .scale-wrap input[type="radio"]{display:none}
@@ -79,6 +87,7 @@ textarea::placeholder{color:var(--fg3)}
 
 @media(max-width:500px){
   .scale-wrap{gap:4px}.scale-btn{padding:10px 2px 8px}.s-num{font-size:15px}.s-lbl{font-size:9px;min-height:24px}.card{padding:18px 14px 16px}
+  .dept-wrap{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -97,7 +106,7 @@ textarea::placeholder{color:var(--fg3)}
 
 <div class="progress-wrap">
   <div class="progress-meta">
-    <span id="prog-label">0 / 9 문항 완료</span>
+    <span id="prog-label">0 / 10 문항 완료</span>
     <strong id="prog-pct">0%</strong>
   </div>
   <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
@@ -106,34 +115,35 @@ textarea::placeholder{color:var(--fg3)}
 <main>
 <form id="sf" novalidate>
 
-  <div class="section-label"><span class="tag">프로그램 만족도</span><span class="line"></span></div>
+  <!-- 기본 정보 -->
+  <div class="section-label"><span class="tag">기본 정보</span><span class="line"></span></div>
 
   <div class="card" id="card-q1">
-    <div class="q-head"><span class="q-num">Q 01</span><span class="q-text">본 프로그램에 대해 전반적으로 만족하셨습니까?<span class="q-required">*</span></span></div>
-    <div class="scale-wrap">
-      <label><input type="radio" name="q1" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
-      <label><input type="radio" name="q1" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
-      <label><input type="radio" name="q1" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
-      <label><input type="radio" name="q1" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
-      <label><input type="radio" name="q1" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
+    <div class="q-head"><span class="q-num">Q 01</span><span class="q-text">소속 계열을 선택해 주세요.<span class="q-required">*</span></span></div>
+    <div class="dept-wrap">
+      <label><input type="radio" name="q1" value="스마트축산계열"><div class="dept-btn">스마트축산계열</div></label>
+      <label><input type="radio" name="q1" value="동물보호계열"><div class="dept-btn">동물보호계열</div></label>
     </div>
-    <div class="err-msg" id="err-q1">응답을 선택해 주세요.</div>
+    <div class="err-msg" id="err-q1">소속 계열을 선택해 주세요.</div>
   </div>
 
+  <!-- 리빙랩 만족도 -->
+  <div class="section-label"><span class="tag">리빙랩 만족도</span><span class="line"></span></div>
+
   <div class="card" id="card-q2">
-    <div class="q-head"><span class="q-num">Q 02</span><span class="q-text">본 프로그램의 교육 내용이 학업(전공 및 교양)에 도움이 된다고 생각하십니까?<span class="q-required">*</span></span></div>
+    <div class="q-head"><span class="q-num">Q 02</span><span class="q-text">리빙랩 참여에 대한 전반적인 만족도는 어떠신가요?<span class="q-required">*</span></span></div>
     <div class="scale-wrap">
-      <label><input type="radio" name="q2" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
-      <label><input type="radio" name="q2" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
-      <label><input type="radio" name="q2" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
-      <label><input type="radio" name="q2" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
-      <label><input type="radio" name="q2" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
+      <label><input type="radio" name="q2" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
+      <label><input type="radio" name="q2" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
+      <label><input type="radio" name="q2" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q2" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
+      <label><input type="radio" name="q2" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
     </div>
     <div class="err-msg" id="err-q2">응답을 선택해 주세요.</div>
   </div>
 
   <div class="card" id="card-q3">
-    <div class="q-head"><span class="q-num">Q 03</span><span class="q-text">본 프로그램을 통해 알게 된 교육내용과 정보가 본인의 역량향상에 도움이 되었다고 생각하십니까?<span class="q-required">*</span></span></div>
+    <div class="q-head"><span class="q-num">Q 03</span><span class="q-text">리빙랩 시작 시 주제와 목표에 대해 명확하게 인식하였나요?<span class="q-required">*</span></span></div>
     <div class="scale-wrap">
       <label><input type="radio" name="q3" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
       <label><input type="radio" name="q3" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
@@ -145,7 +155,7 @@ textarea::placeholder{color:var(--fg3)}
   </div>
 
   <div class="card" id="card-q4">
-    <div class="q-head"><span class="q-num">Q 04</span><span class="q-text">본 프로그램 참여 후, 참여 전에 가졌던 기대감에 비해 만족감은 향상되었습니까?<span class="q-required">*</span></span></div>
+    <div class="q-head"><span class="q-num">Q 04</span><span class="q-text">리빙랩 진행 과정에서 충분한 지원과 지도를 받았나요?<span class="q-required">*</span></span></div>
     <div class="scale-wrap">
       <label><input type="radio" name="q4" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
       <label><input type="radio" name="q4" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
@@ -156,63 +166,75 @@ textarea::placeholder{color:var(--fg3)}
     <div class="err-msg" id="err-q4">응답을 선택해 주세요.</div>
   </div>
 
-  <div class="section-label"><span class="tag">강사 및 시설</span><span class="line"></span></div>
-
   <div class="card" id="card-q5">
-    <div class="q-head"><span class="q-num">Q 05</span><span class="q-text">본 프로그램의 교육 강사에 대해 만족하셨습니까?<span class="q-required">*</span></span></div>
+    <div class="q-head"><span class="q-num">Q 05</span><span class="q-text">팀원들과의 협업이 원활하게 이루어졌나요?<span class="q-required">*</span></span></div>
     <div class="scale-wrap">
-      <label><input type="radio" name="q5" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
-      <label><input type="radio" name="q5" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
-      <label><input type="radio" name="q5" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
-      <label><input type="radio" name="q5" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
-      <label><input type="radio" name="q5" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
+      <label><input type="radio" name="q5" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
+      <label><input type="radio" name="q5" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
+      <label><input type="radio" name="q5" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
+      <label><input type="radio" name="q5" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
+      <label><input type="radio" name="q5" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
     </div>
     <div class="err-msg" id="err-q5">응답을 선택해 주세요.</div>
   </div>
 
-  <div class="card" id="card-q8">
-    <div class="q-head"><span class="q-num">Q 06</span><span class="q-text">본 프로그램 교육 장소 및 기타시설에 대해 만족하셨습니까?<span class="q-required">*</span></span></div>
-    <div class="scale-wrap">
-      <label><input type="radio" name="q8" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
-      <label><input type="radio" name="q8" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
-      <label><input type="radio" name="q8" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
-      <label><input type="radio" name="q8" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
-      <label><input type="radio" name="q8" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
-    </div>
-    <div class="err-msg" id="err-q8">응답을 선택해 주세요.</div>
-  </div>
-
-  <div class="section-label"><span class="tag">재참여 및 추천 의향</span><span class="line"></span></div>
-
   <div class="card" id="card-q6">
-    <div class="q-head"><span class="q-num">Q 07</span><span class="q-text">본 프로그램을 후배나 친구들에게 권유하실 의사가 있으십니까?<span class="q-required">*</span></span></div>
+    <div class="q-head"><span class="q-num">Q 06</span><span class="q-text">프로젝트 결과물에 대해 만족하시나요?<span class="q-required">*</span></span></div>
     <div class="scale-wrap">
-      <label><input type="radio" name="q6" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>없다</span></div></label>
-      <label><input type="radio" name="q6" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">없다</span></div></label>
+      <label><input type="radio" name="q6" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">매우<br>불만족</span></div></label>
+      <label><input type="radio" name="q6" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">불만족</span></div></label>
       <label><input type="radio" name="q6" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
-      <label><input type="radio" name="q6" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">있다</span></div></label>
-      <label><input type="radio" name="q6" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>있다</span></div></label>
+      <label><input type="radio" name="q6" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">만족</span></div></label>
+      <label><input type="radio" name="q6" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>만족</span></div></label>
     </div>
     <div class="err-msg" id="err-q6">응답을 선택해 주세요.</div>
   </div>
 
+  <!-- 지도 교수 -->
+  <div class="section-label"><span class="tag">지도 교수</span><span class="line"></span></div>
+
   <div class="card" id="card-q7">
-    <div class="q-head"><span class="q-num">Q 08</span><span class="q-text">본 프로그램에 재참여할 의사가 있으십니까?<span class="q-required">*</span></span></div>
+    <div class="q-head"><span class="q-num">Q 07</span><span class="q-text">지도교수님의 지도는 효과적이었나요?<span class="q-required">*</span></span></div>
     <div class="scale-wrap">
-      <label><input type="radio" name="q7" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>없다</span></div></label>
-      <label><input type="radio" name="q7" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">없다</span></div></label>
-      <label><input type="radio" name="q7" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
-      <label><input type="radio" name="q7" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">있다</span></div></label>
-      <label><input type="radio" name="q7" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>있다</span></div></label>
+      <label><input type="radio" name="q7" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
+      <label><input type="radio" name="q7" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
+      <label><input type="radio" name="q7" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
+      <label><input type="radio" name="q7" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
+      <label><input type="radio" name="q7" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
     </div>
     <div class="err-msg" id="err-q7">응답을 선택해 주세요.</div>
   </div>
 
-  <div class="section-label"><span class="tag">자유 의견</span><span class="line"></span></div>
+  <div class="card" id="card-q8">
+    <div class="q-head"><span class="q-num">Q 08</span><span class="q-text">현장교수님의 지도는 효과적이었나요?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q8" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>그렇지않다</span></div></label>
+      <label><input type="radio" name="q8" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">그렇지<br>않다</span></div></label>
+      <label><input type="radio" name="q8" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통<br>이다</span></div></label>
+      <label><input type="radio" name="q8" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">그렇다</span></div></label>
+      <label><input type="radio" name="q8" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>그렇다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q8">응답을 선택해 주세요.</div>
+  </div>
+
+  <!-- 추천 및 자유 의견 -->
+  <div class="section-label"><span class="tag">추천 및 자유 의견</span><span class="line"></span></div>
 
   <div class="card" id="card-q9">
-    <div class="q-head"><span class="q-num">Q 09</span><span class="q-text">본 프로그램의 참여 후기 또는 개선점을 자유롭게 작성해 주세요.</span></div>
-    <textarea name="q9" id="q9" placeholder="참여 소감, 좋았던 점, 개선이 필요한 부분 등을 자유롭게 작성해 주세요."></textarea>
+    <div class="q-head"><span class="q-num">Q 09</span><span class="q-text">후배들에게도 리빙랩 과정을 추천할 의향이 있나요?<span class="q-required">*</span></span></div>
+    <div class="scale-wrap">
+      <label><input type="radio" name="q9" value="1"><div class="scale-btn"><span class="s-num">1</span><span class="s-lbl">전혀<br>없다</span></div></label>
+      <label><input type="radio" name="q9" value="2"><div class="scale-btn"><span class="s-num">2</span><span class="s-lbl">없다</span></div></label>
+      <label><input type="radio" name="q9" value="3"><div class="scale-btn"><span class="s-num">3</span><span class="s-lbl">보통</span></div></label>
+      <label><input type="radio" name="q9" value="4"><div class="scale-btn"><span class="s-num">4</span><span class="s-lbl">있다</span></div></label>
+      <label><input type="radio" name="q9" value="5"><div class="scale-btn"><span class="s-num">5</span><span class="s-lbl">매우<br>있다</span></div></label>
+    </div>
+    <div class="err-msg" id="err-q9">응답을 선택해 주세요.</div>
+  </div>
+
+  <div class="card" id="card-q10">
+    <div class="q-head"><span class="q-num">Q 10</span><span class="q-text">리빙랩을 통해 배운 점이나 느낀 점이 있다면 자유롭게 작성해 주세요.</span></div>
+    <textarea name="q10" id="q10" placeholder="배운 점, 어려웠던 점, 개선 제안 등 무엇이든 자유롭게 작성해 주세요."></textarea>
   </div>
 
   <div class="submit-area">
@@ -228,40 +250,66 @@ textarea::placeholder{color:var(--fg3)}
     </svg>
   </div>
   <h2>응답이 제출되었습니다!</h2>
-  <p>소중한 의견 감사합니다.<br>더 나은 프로그램을 위해 적극 반영하겠습니다.<br><br>연암대학교 그린바이오 혁신융합대학사업단</p>
+  <p>소중한 의견 감사합니다.<br>더 나은 리빙랩 운영을 위해 적극 반영하겠습니다.<br><br>연암대학교 그린바이오 혁신융합대학사업단</p>
 </div>
 </main>
 
 <script>
 const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyamNZ0gIouYkqBSg3aBvShDJ_ApvzHfD0PFPAnZfgRIIzt_nmeAozSA3Ks5vYSmW7a/exec";
-const REQ=["q1","q2","q3","q4","q5","q6","q7","q8"];
-const TOTAL=9;
-function countDone(){let n=REQ.filter(name=>document.querySelector(`input[name="${name}"]:checked`)).length;if(document.getElementById("q9")?.value.trim())n++;return n}
-function updateProg(){const n=countDone(),pct=Math.round(n/TOTAL*100);document.getElementById("prog-fill").style.width=pct+"%";document.getElementById("prog-label").textContent=n+" / "+TOTAL+" 문항 완료";document.getElementById("prog-pct").textContent=pct+"%"}
+const REQ=["q1","q2","q3","q4","q5","q6","q7","q8","q9"];
+const TOTAL=10;
+
+function countDone(){
+  let n=REQ.filter(name=>document.querySelector(`input[name="${name}"]:checked`)).length;
+  if(document.getElementById("q10")?.value.trim()) n++;
+  return n;
+}
+function updateProg(){
+  const n=countDone(), pct=Math.round(n/TOTAL*100);
+  document.getElementById("prog-fill").style.width=pct+"%";
+  document.getElementById("prog-label").textContent=n+" / "+TOTAL+" 문항 완료";
+  document.getElementById("prog-pct").textContent=pct+"%";
+}
 document.getElementById("sf").addEventListener("change",updateProg);
 document.getElementById("sf").addEventListener("input",updateProg);
-function validate(){let ok=true,first=null;REQ.forEach(name=>{const card=document.getElementById("card-"+name),err=document.getElementById("err-"+name);if(!document.querySelector(`input[name="${name}"]:checked`)){card.classList.add("has-error");err.style.display="block";if(!first)first=card;ok=false}else{card.classList.remove("has-error");err.style.display="none"}});if(first)first.scrollIntoView({behavior:"smooth",block:"center"});return ok}
+
+function validate(){
+  let ok=true, first=null;
+  REQ.forEach(name=>{
+    const card=document.getElementById("card-"+name);
+    const err=document.getElementById("err-"+name);
+    if(!document.querySelector(`input[name="${name}"]:checked`)){
+      card.classList.add("has-error"); err.style.display="block";
+      if(!first) first=card; ok=false;
+    } else { card.classList.remove("has-error"); err.style.display="none"; }
+  });
+  if(first) first.scrollIntoView({behavior:"smooth",block:"center"});
+  return ok;
+}
+
 document.getElementById("sf").addEventListener("submit",e=>{
-  e.preventDefault();if(!validate())return;
-  const btn=document.getElementById("sub-btn");btn.disabled=true;btn.textContent="제출 중…";
+  e.preventDefault(); if(!validate()) return;
+  const btn=document.getElementById("sub-btn");
+  btn.disabled=true; btn.textContent="제출 중…";
   const payload={
-    timestamp:new Date().toLocaleString("ko-KR"),
-    q1:document.querySelector('input[name="q1"]:checked')?.value||"",
-    q2:document.querySelector('input[name="q2"]:checked')?.value||"",
-    q3:document.querySelector('input[name="q3"]:checked')?.value||"",
-    q4:document.querySelector('input[name="q4"]:checked')?.value||"",
-    q5:document.querySelector('input[name="q5"]:checked')?.value||"",
-    q6:document.querySelector('input[name="q6"]:checked')?.value||"",
-    q7:document.querySelector('input[name="q7"]:checked')?.value||"",
-    q8:document.querySelector('input[name="q8"]:checked')?.value||"",
-    q9:document.getElementById("q9").value
+    timestamp: new Date().toLocaleString("ko-KR"),
+    q1:  document.querySelector('input[name="q1"]:checked')?.value||"",
+    q2:  document.querySelector('input[name="q2"]:checked')?.value||"",
+    q3:  document.querySelector('input[name="q3"]:checked')?.value||"",
+    q4:  document.querySelector('input[name="q4"]:checked')?.value||"",
+    q5:  document.querySelector('input[name="q5"]:checked')?.value||"",
+    q6:  document.querySelector('input[name="q6"]:checked')?.value||"",
+    q7:  document.querySelector('input[name="q7"]:checked')?.value||"",
+    q8:  document.querySelector('input[name="q8"]:checked')?.value||"",
+    q9:  document.querySelector('input[name="q9"]:checked')?.value||"",
+    q10: document.getElementById("q10").value,
   };
   let iframe=document.getElementById("hif");
-  if(!iframe){iframe=document.createElement("iframe");iframe.id="hif";iframe.name="hif";iframe.style.display="none";document.body.appendChild(iframe)}
-  iframe.onload=()=>{document.getElementById("sf").style.display="none";document.getElementById("done-screen").style.display="block";window.scrollTo({top:0,behavior:"smooth"})};
-  const f=document.createElement("form");f.method="POST";f.action=SCRIPT_URL;f.target="hif";
-  Object.entries(payload).forEach(([k,v])=>{const i=document.createElement("input");i.type="hidden";i.name=k;i.value=v;f.appendChild(i)});
-  document.body.appendChild(f);f.submit();document.body.removeChild(f);
+  if(!iframe){ iframe=document.createElement("iframe"); iframe.id="hif"; iframe.name="hif"; iframe.style.display="none"; document.body.appendChild(iframe); }
+  iframe.onload=()=>{ document.getElementById("sf").style.display="none"; document.getElementById("done-screen").style.display="block"; window.scrollTo({top:0,behavior:"smooth"}); };
+  const f=document.createElement("form"); f.method="POST"; f.action=SCRIPT_URL; f.target="hif";
+  Object.entries(payload).forEach(([k,v])=>{ const i=document.createElement("input"); i.type="hidden"; i.name=k; i.value=v; f.appendChild(i); });
+  document.body.appendChild(f); f.submit(); document.body.removeChild(f);
 });
 </script>
 </body>
